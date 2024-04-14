@@ -21,3 +21,9 @@
   text-align: center;
   padding: 0.4rem 0.6rem;
 }
+
+.todo-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2rem;
+}
