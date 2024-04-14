@@ -5,13 +5,22 @@ const TodoCard = ({ name, description, status = false }) => {
   return (
     <>
       <div className="todo-card">
-        <h3 className="todo-name">Name: {name}</h3>
-        <p className="todo-desc">Description: {description}</p>
+        <p className="todo-name">
+          <span>Name: </span> {name}
+        </p>
+        <p className="todo-desc">
+          <span>Description: </span>
+          {description}
+        </p>
         <div className="todo-status">
-          <label htmlFor="todo-filter" className="todo-lbl" id="todo-filter">
+          <label
+            htmlFor="todo-filter"
+            className="todo-lbl"
+            id="todo-filter-card"
+          >
             Status
           </label>
-          <select name="filter" id="todo-filter" className="todo-select">
+          <select name="filter" id="todo-filter-card" className="todo-select">
             {status ? (
               <>
                 {" "}
