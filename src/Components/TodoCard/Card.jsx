@@ -1,23 +1,31 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import "./Card.css";
-import { useState } from "react";
 
-const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
-  const [isEditing, setIsEditing] = useState(false);
+const TodoCard = ({
+  id,
+  name,
+  description,
+  status = false,
+  onUpdateStatus,
+}) => {
   const [editedStatus, setEditedStatus] = useState(status);
+  const [isEditing, setIsEditing] = useState(false);
+  const [prevStatus, setPrevStatus] = useState(status);
 
   const handleEdit = () => {
     setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    setIsEditing(false);
-    onupdateStatus(editedStatus);
+    setPrevStatus(editedStatus); // Save previous status before editing
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditedStatus(status);
+    setEditedStatus(prevStatus); // Revert back to previous status
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+    onUpdateStatus(id, editedStatus);
   };
 
   const handleStatusChange = (e) => {
@@ -25,65 +33,56 @@ const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
   };
 
   return (
-    <>
-      <div className="todo-card">
-        <p className="todo-name">
-          <span>Name: </span> {name}
-        </p>
-        <p className="todo-desc">
-          <span>Description: </span>
-          {description}
-        </p>
-        {isEditing ? (
-          <div className="todo-status-edit">
-            <label htmlFor="todo-filter-card" className="todo-lbl">
-              Status:
-            </label>
-            <select
-              id="todo-filter-card"
-              className="todo-select-card"
-              value={editedStatus}
-              onChange={handleStatusChange}
-            >
-              <option value={true}>Completed</option>
-              <option value={false}>Not Completed</option>
-            </select>
-          </div>
-        ) : (
-          <p className="todo-status">
-            <span>Status: </span>
-            {status ? "Completed" : "Not Completed"}
-          </p>
-        )}
-        <div className="btn-container">
-          {isEditing ? (
-            <>
-              <button className="btn btn-save" onClick={handleSave}>
-                Save
-              </button>
-              <button className="btn btn-cancel" onClick={handleCancel}>
-                Cancel
-              </button>
-            </>
-          ) : (
-            <>
-              <button className="btn btn-edit" onClick={handleEdit}>
-                Edit
-              </button>
-              <button className="btn btn-delete">Delete</button>
-            </>
-          )}
-        </div>
+    <div className="todo-card">
+      <p className="todo-name">
+        <span>Name: </span> {name}
+      </p>
+      <p className="todo-desc">
+        <span>Description: </span>
+        {description}
+      </p>
+      <div className="todo-status">
+        <label htmlFor={`todo-filter-${id}`} className="todo-lbl">
+          Status:
+        </label>
+        <select
+          id={`todo-filter-${id}`}
+          className="todo-select-card"
+          value={editedStatus}
+          onChange={handleStatusChange}
+          disabled={!isEditing} // Disable dropdown when not in edit mode
+        >
+          <option value={true}>Completed</option>
+          <option value={false}>Not Completed</option>
+        </select>
       </div>
-    </>
+      {isEditing ? (
+        <div className="btn-container">
+          <button className="btn btn-save" onClick={handleSave}>
+            Save
+          </button>
+          <button className="btn btn-cancel" onClick={handleCancel}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className="btn-container">
+          <button className="btn btn-edit" onClick={handleEdit}>
+            Edit
+          </button>
+          <button className="btn btn-delete">Delete</button>
+        </div>
+      )}
+    </div>
   );
 };
 
 TodoCard.propTypes = {
-  name: PropTypes.string,
-  description: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   status: PropTypes.bool,
-  onupdateStatus: PropTypes.func,
+  onUpdateStatus: PropTypes.func.isRequired,
 };
 
 export default TodoCard;

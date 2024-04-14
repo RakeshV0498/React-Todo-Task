@@ -11,6 +11,10 @@
   margin-bottom: 2rem;
 }
 
+.todo-status {
+  font-weight: 700;
+}
+
 .todo-card span,
 .todo-card label {
   font-weight: 700;
