@@ -1,7 +1,29 @@
 import PropTypes from "prop-types";
 import "./Card.css";
+import { useState } from "react";
 
-const TodoCard = ({ name, description, status = false }) => {
+const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedStatus, setEditedStatus] = useState(status);
+
+  const handleEdit = (e) => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+    onupdateStatus(editedStatus);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedStatus(status);
+  };
+
+  const handleStatusChange = (e) => {
+    setEditedStatus(e.target.value === "true");
+  };
+
   return (
     <>
       <div className="todo-card">
@@ -24,6 +46,7 @@ const TodoCard = ({ name, description, status = false }) => {
             name="filter"
             id="todo-filter-card"
             className="todo-select-card"
+            disabled
           >
             {status ? (
               <>
@@ -48,8 +71,23 @@ const TodoCard = ({ name, description, status = false }) => {
           </select>
         </div>
         <div className="btn-container">
-          <buttton className="btn btn-edit">Edit</buttton>
-          <buttton className="btn btn-delete">Delete</buttton>
+          {isEditing ? (
+            <>
+              <button className="btn btn-save" onClick={handleSave}>
+                Save
+              </button>
+              <button className="btn btn-cancel" onClick={handleCancel}>
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <buttton className="btn btn-edit" onClick={handleEdit}>
+                Edit
+              </buttton>
+              <buttton className="btn btn-delete">Delete</buttton>
+            </>
+          )}
         </div>
       </div>
     </>
@@ -60,6 +98,7 @@ TodoCard.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   status: PropTypes.bool,
+  onupdateStatus: PropTypes.func,
 };
 
 export default TodoCard;
