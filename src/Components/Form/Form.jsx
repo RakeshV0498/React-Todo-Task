@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./Form.css";
+import PropTypes from "prop-types";
 
-const TodoForm = () => {
+const TodoForm = ({ onAddTodo }) => {
   const [todoName, setTodoName] = useState("");
   const [todoDescription, setTodoDescription] = useState("");
 
@@ -11,7 +12,7 @@ const TodoForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Call the function passed from the parent component to add the new todo item
-    onAddTo({
+    onAddTodo({
       name: todoName,
       description: todoDescription,
       status: false,
@@ -44,6 +45,10 @@ const TodoForm = () => {
       </form>
     </>
   );
+};
+
+TodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
 };
 
 export default TodoForm;

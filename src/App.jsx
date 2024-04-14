@@ -23,8 +23,15 @@ const initialData = [
 function App() {
   const [filtervalue, setFilterValue] = useState("all");
   const [data, setData] = useState(initialData);
+
   const handleFilter = (e) => {
     setFilterValue(e.target.value);
+  };
+
+  const handleAddTodo = (newTodo) => {
+    const newId = Math.max(...data.map((item) => item.id)) + 1;
+    const newData = [...data, { id: newId, ...newTodo }];
+    setData(newData);
   };
 
   const onUpdateStatus = (id, newStatus) => {
@@ -36,7 +43,7 @@ function App() {
 
   return (
     <>
-      <TodoForm />
+      <TodoForm onAddTodo={handleAddTodo} />
       <div className="todo-header">
         <h2 className="todo-title-text">My Todos</h2>
         <form className="todo-filter">
