@@ -43,6 +43,7 @@ function App() {
 
   return (
     <>
+      {console.log(data)}
       <TodoForm onAddTodo={handleAddTodo} />
       <div className="todo-header">
         <h2 className="todo-title-text">My Todos</h2>

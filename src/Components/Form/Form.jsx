@@ -27,6 +27,7 @@ const TodoForm = ({ onAddTodo }) => {
       <form className="todo-form" onSubmit={handleSubmit}>
         <input
           type="text"
+          value={todoName}
           className="todo-input"
           required
           placeholder="Todo Name"
@@ -34,6 +35,7 @@ const TodoForm = ({ onAddTodo }) => {
         />
         <input
           type="text"
+          value={todoDescription}
           className="todo-input"
           required
           placeholder="Todo Description"
