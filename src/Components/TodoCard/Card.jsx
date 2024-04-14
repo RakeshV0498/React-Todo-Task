@@ -6,7 +6,7 @@ const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedStatus, setEditedStatus] = useState(status);
 
-  const handleEdit = (e) => {
+  const handleEdit = () => {
     setIsEditing(true);
   };
 
@@ -34,42 +34,27 @@ const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
           <span>Description: </span>
           {description}
         </p>
-        <div className="todo-status">
-          <label
-            htmlFor="todo-filter"
-            className="todo-lbl"
-            id="todo-filter-card"
-          >
-            Status:
-          </label>
-          <select
-            name="filter"
-            id="todo-filter-card"
-            className="todo-select-card"
-            disabled
-          >
-            {status ? (
-              <>
-                {" "}
-                <option value="completed" className="todo-filter-option">
-                  Completed
-                </option>
-                <option value="not-completed" className="todo-filter-option">
-                  Not-Completed
-                </option>
-              </>
-            ) : (
-              <>
-                <option value="not-completed" className="todo-filter-option">
-                  Not-Completed
-                </option>
-                <option value="completed" className="todo-filter-option">
-                  Completed
-                </option>
-              </>
-            )}
-          </select>
-        </div>
+        {isEditing ? (
+          <div className="todo-status-edit">
+            <label htmlFor="todo-filter-card" className="todo-lbl">
+              Status:
+            </label>
+            <select
+              id="todo-filter-card"
+              className="todo-select-card"
+              value={editedStatus}
+              onChange={handleStatusChange}
+            >
+              <option value={true}>Completed</option>
+              <option value={false}>Not Completed</option>
+            </select>
+          </div>
+        ) : (
+          <p className="todo-status">
+            <span>Status: </span>
+            {status ? "Completed" : "Not Completed"}
+          </p>
+        )}
         <div className="btn-container">
           {isEditing ? (
             <>
@@ -82,10 +67,10 @@ const TodoCard = ({ name, description, status = false, onupdateStatus }) => {
             </>
           ) : (
             <>
-              <buttton className="btn btn-edit" onClick={handleEdit}>
+              <button className="btn btn-edit" onClick={handleEdit}>
                 Edit
-              </buttton>
-              <buttton className="btn btn-delete">Delete</buttton>
+              </button>
+              <button className="btn btn-delete">Delete</button>
             </>
           )}
         </div>

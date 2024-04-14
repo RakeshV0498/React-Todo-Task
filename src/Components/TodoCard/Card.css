@@ -6,7 +6,8 @@
 
 .todo-name,
 .todo-desc,
-.todo-status {
+.todo-status,
+.todo-status-edit {
   margin-bottom: 2rem;
 }
 
