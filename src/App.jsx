@@ -1,7 +1,11 @@
 import "./App.css";
-
+import TodoForm from "./Components/Form/Form";
 function App() {
-  return <></>;
+  return (
+    <>
+      <TodoForm />
+    </>
+  );
 }
 
 export default App;
