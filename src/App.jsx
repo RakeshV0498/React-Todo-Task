@@ -3,14 +3,16 @@ import "./App.css";
 import TodoForm from "./Components/Form/Form";
 import TodoCard from "./Components/TodoCard/Card";
 
-const data = [
+const initialData = [
   {
+    id: 1,
     name: "My Todo -1",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste accusamus nam itaque soluta iure.",
     status: false,
   },
   {
+    id: 2,
     name: "My Todo -2",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste accusamus nam itaque soluta iure.",
@@ -19,12 +21,19 @@ const data = [
 ];
 
 function App() {
-  const [filtervalue, setFilterValue] = useState("All");
-
+  const [filtervalue, setFilterValue] = useState("all");
+  const [data, setData] = useState(initialData);
   const handleFilter = (e) => {
-    console.log(e.target.value);
     setFilterValue(e.target.value);
   };
+
+  const onUpdateStatus = (id, newStatus) => {
+    const updatedData = data.map((item) =>
+      item.id === id ? { ...item, status: newStatus } : item
+    );
+    setData(updatedData);
+  };
+
   return (
     <>
       <TodoForm />
@@ -54,15 +63,29 @@ function App() {
       </div>
       <div className="todo-container">
         {filtervalue === "all" &&
-          data.map((item, index) => <TodoCard key={index} {...item} />)}
+          data.map((item) => (
+            <TodoCard key={item.id} {...item} onUpdateStatus={onUpdateStatus} />
+          ))}
         {filtervalue === "completed" &&
           data
             .filter((item) => item.status === true)
-            .map((item, index) => <TodoCard key={index} {...item} />)}
+            .map((item) => (
+              <TodoCard
+                key={item.id}
+                {...item}
+                onUpdateStatus={onUpdateStatus}
+              />
+            ))}
         {filtervalue === "not-completed" &&
           data
             .filter((item) => item.status === false)
-            .map((item, index) => <TodoCard key={index} {...item} />)}
+            .map((item) => (
+              <TodoCard
+                key={item.id}
+                {...item}
+                onUpdateStatus={onUpdateStatus}
+              />
+            ))}
       </div>
     </>
   );
