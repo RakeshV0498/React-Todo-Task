@@ -18,9 +18,13 @@ const TodoCard = ({ name, description, status = false }) => {
             className="todo-lbl"
             id="todo-filter-card"
           >
-            Status
+            Status:
           </label>
-          <select name="filter" id="todo-filter-card" className="todo-select">
+          <select
+            name="filter"
+            id="todo-filter-card"
+            className="todo-select-card"
+          >
             {status ? (
               <>
                 {" "}
@@ -42,6 +46,10 @@ const TodoCard = ({ name, description, status = false }) => {
               </>
             )}
           </select>
+        </div>
+        <div className="btn-container">
+          <buttton className="btn btn-edit">Edit</buttton>
+          <buttton className="btn btn-delete">Delete</buttton>
         </div>
       </div>
     </>
