@@ -7,11 +7,9 @@ function App() {
       <div className="todo-header">
         <h2 className="todo-title-text">My Todos</h2>
         <form className="todo-filter">
-          <label
-            htmlFor="todo-filter"
-            className="todo-lbl"
-            id="todo-filter"
-          ></label>
+          <label htmlFor="todo-filter" className="todo-lbl" id="todo-filter">
+            Status Filter:
+          </label>
           <select name="filter" id="todo-filter" className="todo-select">
             <option value="all" className="todo-filter-option">
               All
