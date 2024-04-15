@@ -41,6 +41,11 @@ function App() {
     setData(updatedData);
   };
 
+  const handleDeleteTodo = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   return (
     <>
       {console.log(data)}
@@ -72,7 +77,12 @@ function App() {
       <div className="todo-container">
         {filtervalue === "all" &&
           data.map((item) => (
-            <TodoCard key={item.id} {...item} onUpdateStatus={onUpdateStatus} />
+            <TodoCard
+              key={item.id}
+              {...item}
+              onUpdateStatus={onUpdateStatus}
+              onDeleteTodo={handleDeleteTodo}
+            />
           ))}
         {filtervalue === "completed" &&
           data
@@ -82,6 +92,7 @@ function App() {
                 key={item.id}
                 {...item}
                 onUpdateStatus={onUpdateStatus}
+                onDeleteTodo={handleDeleteTodo}
               />
             ))}
         {filtervalue === "not-completed" &&
@@ -92,6 +103,7 @@ function App() {
                 key={item.id}
                 {...item}
                 onUpdateStatus={onUpdateStatus}
+                onDeleteTodo={handleDeleteTodo}
               />
             ))}
       </div>
