@@ -8,6 +8,7 @@ const TodoCard = ({
   description,
   status = false,
   onUpdateStatus,
+  onDeleteTodo,
 }) => {
   const [editedStatus, setEditedStatus] = useState(status);
   const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +27,10 @@ const TodoCard = ({
   const handleSave = () => {
     setIsEditing(false);
     onUpdateStatus(id, editedStatus);
+  };
+
+  const handleDelete = () => {
+    onDeleteTodo(id);
   };
 
   const handleStatusChange = (e) => {
@@ -70,7 +75,9 @@ const TodoCard = ({
           <button className="btn btn-edit" onClick={handleEdit}>
             Edit
           </button>
-          <button className="btn btn-delete">Delete</button>
+          <button className="btn btn-delete" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       )}
     </div>
@@ -83,6 +90,7 @@ TodoCard.propTypes = {
   description: PropTypes.string.isRequired,
   status: PropTypes.bool,
   onUpdateStatus: PropTypes.func.isRequired,
+  onDeleteTodo: PropTypes.func.isRequired,
 };
 
 export default TodoCard;
